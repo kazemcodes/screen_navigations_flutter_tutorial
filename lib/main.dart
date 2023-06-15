@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/" : (context) => Screen1(),
-        "/second" : (context) => Screen2(),
+        Screen2.routeName : (context) => Screen2(),
       },
     );
   }
@@ -35,7 +35,8 @@ class Screen1 extends StatelessWidget {
           child: GestureDetector(
             child: Text("Screen One"),
             onTap: () {
-              Navigator.pushNamed(context, "/second",arguments: SecondScreenArguments("hello world"));
+              Navigator.pushNamed(context, "/second",arguments: SecondScreenArguments("Hello World"));
+              //Navigator.pushNamed(context, "/second");
               // Navigator.push(context, MaterialPageRoute(builder: (context) {
               //   return Screen2();
               // }));
@@ -49,7 +50,10 @@ class SecondScreenArguments {
   final String message;
 
   SecondScreenArguments(this.message);
+
+
 }
+
 class Screen2 extends StatelessWidget {
   const Screen2({Key? key}) : super(key: key);
 
@@ -57,6 +61,7 @@ class Screen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final args = ModalRoute.of(context)!.settings.arguments as SecondScreenArguments;
     return Scaffold(
       body: Center(
