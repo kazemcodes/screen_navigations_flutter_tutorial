@@ -28,14 +28,35 @@ class MyApp extends StatelessWidget {
 class Screen1 extends StatelessWidget {
   const Screen1({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    // A method that launches the SelectionScreen and awaits the result from
+// Navigator.pop.
+    Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+      // Navigator.push returns a Future that completes after calling
+      // Navigator.pop on the Selection Screen.
+      final result = await Navigator.pushNamed(context, "/second",arguments: SecondScreenArguments("Hello World"));
+
+      // When a BuildContext is used from a StatefulWidget, the mounted property
+      // must be checked after an asynchronous gap.
+      if (!context.mounted) return;
+
+      // After the Selection Screen returns a result, hide any previous snackbars
+      // and show the new result.
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text('$result')));
+    }
     return Scaffold(
       body: Center(
           child: GestureDetector(
             child: Text("Screen One"),
             onTap: () {
-              Navigator.pushNamed(context, "/second",arguments: SecondScreenArguments("Hello World"));
+              _navigateAndDisplaySelection(context);
+              //Navigator.pushNamed(context, "/second",arguments: SecondScreenArguments("Hello World"));
               //Navigator.pushNamed(context, "/second");
               // Navigator.push(context, MaterialPageRoute(builder: (context) {
               //   return Screen2();
@@ -68,7 +89,7 @@ class Screen2 extends StatelessWidget {
           child: GestureDetector(
             child: Text(args.message),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pop(context,"goodbye world");
             },
           )),
     );
