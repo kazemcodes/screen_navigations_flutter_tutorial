@@ -16,7 +16,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Screen1(),
+      initialRoute: "/",
+      routes: {
+        "/" : (context) => Screen1(),
+        "/second" : (context) => Screen2(),
+      },
     );
   }
 }
@@ -29,13 +33,14 @@ class Screen1 extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: GestureDetector(
-        child: Text("Screen One"),
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return Screen2();
-          }));
-        },
-      )),
+            child: Text("Screen One"),
+            onTap: () {
+              Navigator.pushNamed(context, "/second");
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return Screen2();
+              // }));
+            },
+          )),
     );
   }
 }
@@ -48,11 +53,11 @@ class Screen2 extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: GestureDetector(
-        child: Text("Screen Two"),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      )),
+            child: Text("Screen Two"),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )),
     );
   }
 }
